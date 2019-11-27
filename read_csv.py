@@ -12,7 +12,7 @@ def read_csv(file,):
              'op2': item[1][4],
              'op3': item[1][5],
              'op4': item[1][6],
-             'ans': item[1][7],
+             'ans': str(item[1][7]) if len(str(item[1][7])) == 1 else str(item[1][7])[2],
              } for i, item in enumerate(df.iterrows())]
 
 
@@ -24,10 +24,11 @@ if __name__ == '__main__':
     for root, dirs, files in os.walk("./data", topdown=True):
         files = sorted(files)
         for name in files:
-            if '.csv' in name:
+            if '.csv' in name and 'inter' not in name:
                 print(os.path.join(root, name))
                 result += read_csv(os.path.join(root, name))
 
     with open('data/total.json', 'w') as f:
+        print(len(result))
         json.dump(result, f, ensure_ascii=False)
 
