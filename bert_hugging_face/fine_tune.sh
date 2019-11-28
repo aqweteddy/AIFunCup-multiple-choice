@@ -13,7 +13,7 @@ python ./run.py \
 --num_train_epochs 4 \
 --max_seq_length 512 \
 --output_dir model \
---per_gpu_eval_batch_size=16 \
---per_gpu_train_batch_size=16 \
+--per_gpu_eval_batch_size=2 \
+--per_gpu_train_batch_size=2 \
 --gradient_accumulation_steps 2 \
 --overwrite_output
