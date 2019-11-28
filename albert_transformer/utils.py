@@ -105,7 +105,7 @@ class FunCupProcessor(DataProcessor):
         return self._create_example(dev, 'dev')
 
     def get_labels(self):
-        return [0, 1, 2, 3]
+        return ['0', '1', '2', '3']
 
     def get_test_examples(self, data_dir):
         """See base class."""
@@ -124,7 +124,7 @@ class FunCupProcessor(DataProcessor):
             question=item['question'],
             contexts=[item['content'], item['content'], item['content'], item['content']],
             endings=[str(item['op1']), str(item['op2']), str(item['op3']), str(item['op4'])],
-            label=int(item['ans']) - 1 if set_type != 'test' else None
+            label=str(int(item['ans']) - 1) if set_type != 'test' else None
         ) for item in data]
 
         return examples
