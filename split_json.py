@@ -21,5 +21,6 @@ def split_data(input_file, target_dir, num_train=7000, num_test=1000):
 
 if __name__ == '__main__':
     import os
+    os.mkdir('data')
     os.mkdir('data/funcup_tw')
-    split_data('data/total.json', 'data/funcup_tw')
+    split_data('total.json', 'data/funcup_tw')
