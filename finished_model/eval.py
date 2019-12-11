@@ -9,8 +9,8 @@ from tqdm import tqdm
 import csv
 
 
-MODEL_NAME = 'bert_chinese_tw'
-
+MODEL_NAME = 'bert_funcup_tw'
+JSON_FILE = '../data/formal/total_3.json'
 
 # load data
 def select_field(features, field):
@@ -23,14 +23,14 @@ def select_field(features, field):
     ]
 
 
-with open('../data/test_data/test.json') as f:
+with open(JSON_FILE) as f:
     data = json.load(f)
 examples = [InputExample(
     example_id='{}'.format(item['id']),
     question=item['question'],
     contexts=[item['content'], item['content'], item['content'], item['content']],
     endings=[str(item['op1']), str(item['op2']), str(item['op3']), str(item['op4'])],
-    label=int(item['ans']) - 1
+    label=0
 ) for item in data]
 features = convert_examples_to_features(examples, [0, 1, 2, 3], 512, BertTokenizer.from_pretrained(MODEL_NAME))
 all_input_ids = torch.tensor(select_field(features, 'input_ids'), dtype=torch.long)
@@ -64,10 +64,10 @@ for batch in tqdm(eval_dataloader, desc="Evaluating"):
 
 preds = np.argmax(preds, axis=1)
 print(preds)
-with open(MODEL_NAME+'.csv', 'w', newline='') as f:
+with open(MODEL_NAME+'3.csv', 'w', newline='') as f:
     writer = csv.writer(f)
     writer.writerow(['ID', 'Answer'])
     for i, pred in enumerate(preds):
        writer.writerow([i+1, pred+1])
 
-# kaggle competitions submit -c 2020-talk2ai-x-funcup-practice -f submission.csv -m "Message"
+# kaggle competitions submit -c 20191130-ai-fun-cup -f submission.csv -m "Message"
